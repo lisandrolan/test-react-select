@@ -2,8 +2,8 @@ import faker from 'faker';
 import _ from 'lodash';
 import React from "react";
 import 'semantic-ui-css/semantic.min.css';
-import BasicAutoSuggest from './components/basic.autosuggest';
-import ServerAutoSuggest from './components/server.autosuggest';
+import { Dropdown } from "semantic-ui-react";
+
 const getOptions = () =>
   _.times(3, () => {
     const name = faker.name.findName()
@@ -31,16 +31,23 @@ class App extends React.Component {
     }, 500)
   }
   render() {
-
+    const {  options, isFetching,  value } = this.state
     return (
       <div className="App">
-
-      <h1>Basic Auto Suggest</h1>
-      <BasicAutoSuggest />
-
-      <h1>Server Auto Suggest</h1>
-      <ServerAutoSuggest />
-    </div>
+        <Dropdown
+          fluid
+          selection
+          multiple={false}
+          search={true}
+          options={options}
+          value={value}
+          placeholder="Add Users"
+          onChange={this.handleChange}
+          onSearchChange={this.handleSearchChange}
+          disabled={isFetching}
+          loading={isFetching}
+        />
+      </div>
     );
   }
 }
